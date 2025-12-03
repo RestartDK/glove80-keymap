@@ -374,7 +374,6 @@
             tapping-term-ms = <TAPPING_TERM_MS>;
             quick-tap-ms = <QUICK_TAP_MS>;
             require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
-            hold-trigger-key-positions = <RIGHT_HAND_KEYS>;
             hold-trigger-on-release;  // Wait for other home row mods
             bindings = <&kp>, <&kp>;
         };
@@ -388,7 +387,6 @@
             tapping-term-ms = <TAPPING_TERM_MS>;
             quick-tap-ms = <QUICK_TAP_MS>;
             require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
-            hold-trigger-key-positions = <LEFT_HAND_KEYS>;
             hold-trigger-on-release;
             bindings = <&kp>, <&kp>;
         };
