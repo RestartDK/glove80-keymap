@@ -313,52 +313,10 @@
  * support expressions), so we precompute all timing values here.
  */
 
-#ifndef DIFFICULTY_LEVEL
-#define DIFFICULTY_LEVEL 4
-#endif
-
-/* Base tapping resolution per difficulty level */
-#if   DIFFICULTY_LEVEL == 1
-  #define TAPPING_RESOLUTION 500
-#elif DIFFICULTY_LEVEL == 2
-  #define TAPPING_RESOLUTION 400
-#elif DIFFICULTY_LEVEL == 3
-  #define TAPPING_RESOLUTION 300
-#elif DIFFICULTY_LEVEL == 4
-  #define TAPPING_RESOLUTION 200
-#elif DIFFICULTY_LEVEL == 5
-  #define TAPPING_RESOLUTION 100
-#else
-  #define TAPPING_RESOLUTION 150  /* fallback / custom */
-#endif
-
-/* Derived timing values as pure numbers (no expressions allowed in <>) */
-#if   DIFFICULTY_LEVEL == 1
-  #define TAPPING_TERM_MS          590  /* 500 + 90  */
-  #define QUICK_TAP_MS             650  /* 500 + 150 */
-  #define REQUIRE_PRIOR_IDLE_MS    500
-#elif DIFFICULTY_LEVEL == 2
-  #define TAPPING_TERM_MS          490  /* 400 + 90  */
-  #define QUICK_TAP_MS             550  /* 400 + 150 */
-  #define REQUIRE_PRIOR_IDLE_MS    400
-#elif DIFFICULTY_LEVEL == 3
-  #define TAPPING_TERM_MS          390  /* 300 + 90  */
-  #define QUICK_TAP_MS             450  /* 300 + 150 */
-  #define REQUIRE_PRIOR_IDLE_MS    300
-#elif DIFFICULTY_LEVEL == 4
-  #define TAPPING_TERM_MS          290  /* 200 + 90  */
-  #define QUICK_TAP_MS             350  /* 200 + 150 */
-  #define REQUIRE_PRIOR_IDLE_MS    200
-#elif DIFFICULTY_LEVEL == 5
-  #define TAPPING_TERM_MS          190  /* 100 + 90  */
-  #define QUICK_TAP_MS             250  /* 100 + 150 */
-  #define REQUIRE_PRIOR_IDLE_MS    100
-#else
-  /* Fallback based on TAPPING_RESOLUTION 150 */
-  #define TAPPING_TERM_MS          240  /* 150 + 90  */
-  #define QUICK_TAP_MS             300  /* 150 + 150 */
-  #define REQUIRE_PRIOR_IDLE_MS    150
-#endif
+#define TAPPING_RESOLUTION       200
+#define TAPPING_TERM_MS          290  
+#define QUICK_TAP_MS             350  
+#define REQUIRE_PRIOR_IDLE_MS    100
 
 / {
     behaviors {
