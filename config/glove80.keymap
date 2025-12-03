@@ -310,22 +310,56 @@
 
 /* Difficulty level for home row mods timing:
  * 1 = hardest (shortest tapping term), 5 = easiest (longest tapping term)
+ *
+ * We must provide plain numeric constants in devicetree (`<>` does not
+ * support expressions), so we precompute all timing values here.
  */
 
 #ifndef DIFFICULTY_LEVEL
-#define DIFFICULTY_LEVEL 4  // Start with level 2 (400ms - more forgiving)
-                           // Level 0 = 150ms (Sunaku's expert setting)
-                           // Level 1 = 500ms (novice)
-                           // Level 2 = 400ms (slower) <- START HERE
-                           // Level 3 = 300ms (normal)
-                           // Level 4 = 200ms (faster)
-                           // Level 5 = 100ms (expert)
+#define DIFFICULTY_LEVEL 4
 #endif
 
-#if DIFFICULTY_LEVEL > 0 && DIFFICULTY_LEVEL < 6
-  #define TAPPING_RESOLUTION ((6 - DIFFICULTY_LEVEL) * 100)
+/* Base tapping resolution per difficulty level */
+#if   DIFFICULTY_LEVEL == 1
+  #define TAPPING_RESOLUTION 500
+#elif DIFFICULTY_LEVEL == 2
+  #define TAPPING_RESOLUTION 400
+#elif DIFFICULTY_LEVEL == 3
+  #define TAPPING_RESOLUTION 300
+#elif DIFFICULTY_LEVEL == 4
+  #define TAPPING_RESOLUTION 200
+#elif DIFFICULTY_LEVEL == 5
+  #define TAPPING_RESOLUTION 100
 #else
-  #define TAPPING_RESOLUTION 150  // Sunaku's custom setting
+  #define TAPPING_RESOLUTION 150  /* fallback / custom */
+#endif
+
+/* Derived timing values as pure numbers (no expressions allowed in <>) */
+#if   DIFFICULTY_LEVEL == 1
+  #define TAPPING_TERM_MS          590  /* 500 + 90  */
+  #define QUICK_TAP_MS             650  /* 500 + 150 */
+  #define REQUIRE_PRIOR_IDLE_MS    500
+#elif DIFFICULTY_LEVEL == 2
+  #define TAPPING_TERM_MS          490  /* 400 + 90  */
+  #define QUICK_TAP_MS             550  /* 400 + 150 */
+  #define REQUIRE_PRIOR_IDLE_MS    400
+#elif DIFFICULTY_LEVEL == 3
+  #define TAPPING_TERM_MS          390  /* 300 + 90  */
+  #define QUICK_TAP_MS             450  /* 300 + 150 */
+  #define REQUIRE_PRIOR_IDLE_MS    300
+#elif DIFFICULTY_LEVEL == 4
+  #define TAPPING_TERM_MS          290  /* 200 + 90  */
+  #define QUICK_TAP_MS             350  /* 200 + 150 */
+  #define REQUIRE_PRIOR_IDLE_MS    200
+#elif DIFFICULTY_LEVEL == 5
+  #define TAPPING_TERM_MS          190  /* 100 + 90  */
+  #define QUICK_TAP_MS             250  /* 100 + 150 */
+  #define REQUIRE_PRIOR_IDLE_MS    100
+#else
+  /* Fallback based on TAPPING_RESOLUTION 150 */
+  #define TAPPING_TERM_MS          240  /* 150 + 90  */
+  #define QUICK_TAP_MS             300  /* 150 + 150 */
+  #define REQUIRE_PRIOR_IDLE_MS    150
 #endif
 
 / {
@@ -337,9 +371,9 @@
             label = "HOMEROW_MODS_LEFT";
             #binding-cells = <2>;
             flavor = "tap-preferred";
-            tapping-term-ms = <TAPPING_RESOLUTION + 90>;  
-            quick-tap-ms = <TAPPING_RESOLUTION + 150>;    
-            require-prior-idle-ms = <TAPPING_RESOLUTION>; 
+            tapping-term-ms = <TAPPING_TERM_MS>;
+            quick-tap-ms = <QUICK_TAP_MS>;
+            require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
             hold-trigger-key-positions = <RIGHT_HAND_KEYS>;
             hold-trigger-on-release;  // Wait for other home row mods
             bindings = <&kp>, <&kp>;
@@ -351,9 +385,9 @@
             label = "HOMEROW_MODS_RIGHT";
             #binding-cells = <2>;
             flavor = "tap-preferred";
-            tapping-term-ms = <TAPPING_RESOLUTION + 90>;
-            quick-tap-ms = <TAPPING_RESOLUTION + 150>;
-            require-prior-idle-ms = <TAPPING_RESOLUTION>;
+            tapping-term-ms = <TAPPING_TERM_MS>;
+            quick-tap-ms = <QUICK_TAP_MS>;
+            require-prior-idle-ms = <REQUIRE_PRIOR_IDLE_MS>;
             hold-trigger-key-positions = <LEFT_HAND_KEYS>;
             hold-trigger-on-release;
             bindings = <&kp>, <&kp>;
